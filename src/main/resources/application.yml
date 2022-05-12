@@ -1,4 +1,0 @@
-debug: true
-server:
-  servlet:
-    context-path: '/pronounce-it-right'
