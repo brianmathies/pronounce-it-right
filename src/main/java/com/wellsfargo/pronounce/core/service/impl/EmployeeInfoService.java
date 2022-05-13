@@ -1,54 +1,53 @@
 package com.wellsfargo.pronounce.core.service.impl;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wellsfargo.pronounce.core.model.EmployeeInfo;
+import com.wellsfargo.pronounce.core.data.dao.EmployeeInfoRepo;
+import com.wellsfargo.pronounce.core.data.entity.EmployeeInfo;
+import com.wellsfargo.pronounce.core.model.EmployeeInfoDto;
 import com.wellsfargo.pronounce.core.service.IEmployeeInfoService;
 
 @Service
 public class EmployeeInfoService implements IEmployeeInfoService {
+	
+	@Autowired
+	EmployeeInfoRepo repo;
 
     @Override
-    public EmployeeInfo getEmployeeInfo(Long empId) {
-        return getEmployees().stream().filter(emp -> emp.getEmpId().equals(empId)).findAny().get();
+    public EmployeeInfoDto getEmployeeInfo(Long empId) {
+        return mapToDto(repo.findById(empId).get());
 
     }
 
     @Override
-    public void saveEmployeeInfo(EmployeeInfo employeeInfo) {
-        // TODO Auto-generated method stub
-
+    public EmployeeInfoDto saveEmployeeInfo(EmployeeInfoDto employeeInfo) {
+    	EmployeeInfo emp = repo.findById(employeeInfo.getEmpId()).get();
+    	emp.setNamePhoneme(employeeInfo.getNamePhoneme());
+    	return mapToDto(repo.save(emp));
     }
 
     @Override
-    public List<EmployeeInfo> searchEmployee(String name) {
-        return getEmployees().stream().filter(emp -> emp.getEmpName().toLowerCase().contains(name.toLowerCase()))
-                .collect(Collectors.toList());
-
+    public List<EmployeeInfoDto> searchEmployee(String name) {
+    	List<EmployeeInfoDto> empList = new ArrayList<EmployeeInfoDto>();
+        repo.findByEmpNameContainingIgnoreCase(name).forEach(entity ->
+        		empList.add(mapToDto(entity)));
+        return empList;
     }
-
-    private List<EmployeeInfo> getEmployees() {
-        EmployeeInfo employeeInfo = new EmployeeInfo();
-        employeeInfo.setEmpId(1453L);
-        employeeInfo.setEmail("john.doe@xyz.com");
-        employeeInfo.setEmpName("John Doe");
-        employeeInfo.setLegalName("Jonathan Doe");
-        employeeInfo.setNamePhoneme("John Doe");
-        employeeInfo.setTitle("Software Engineer");
-
-        EmployeeInfo employeeInfo2 = new EmployeeInfo();
-        employeeInfo2.setEmpId(1454L);
-        employeeInfo2.setEmail("charles.green@xyz.com");
-        employeeInfo2.setEmpName("Charles Green");
-        employeeInfo2.setLegalName("Charles Green");
-        employeeInfo2.setNamePhoneme("Charles Green");
-        employeeInfo2.setTitle("Senior Software Engineer");
-
-        return Arrays.asList(employeeInfo, employeeInfo2);
+    
+    private EmployeeInfoDto mapToDto(EmployeeInfo entity) {
+    	EmployeeInfoDto dto = new EmployeeInfoDto();
+    	dto.setEmpId(entity.getEmpId());
+    	dto.setEmpName(entity.getEmpName());
+    	dto.setLegalName(entity.getLegalName());
+    	dto.setNamePhoneme(entity.getNamePhoneme());
+    	dto.setRole(entity.getRole());
+    	dto.setTitle(entity.getTitle());
+    	
+    	return dto;
     }
 
 }	

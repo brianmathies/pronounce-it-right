@@ -92,6 +92,12 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     
     implementation group: 'net.sf.sociaal', name: 'freetts', version: '1.2.2'
+    
+    implementation 'org.springframework.data:spring-data-jpa'
+    implementation group: 'com.yugabyte', name: 'spring-data-yugabytedb-ysql', version: '2.3.0'
+    implementation group: 'com.yugabyte', name: 'jdbc-yugabytedb', version: '42.2.7-yb-5-beta.1'
+    implementation 'com.zaxxer:HikariCP'
+    implementation group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.0.Final' 
 
 }
 

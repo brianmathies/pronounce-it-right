@@ -2,14 +2,14 @@ package com.wellsfargo.pronounce.core.service;
 
 import java.util.List;
 
-import com.wellsfargo.pronounce.core.model.EmployeeInfo;
+import com.wellsfargo.pronounce.core.model.EmployeeInfoDto;
 
 public interface IEmployeeInfoService {
 
-    EmployeeInfo getEmployeeInfo(Long empId);
+    EmployeeInfoDto getEmployeeInfo(Long empId);
 
-    List<EmployeeInfo> searchEmployee(String name);
+    List<EmployeeInfoDto> searchEmployee(String name);
 
-    void saveEmployeeInfo(EmployeeInfo employeeInfo);
+    EmployeeInfoDto saveEmployeeInfo(EmployeeInfoDto employeeInfo);
 
 }

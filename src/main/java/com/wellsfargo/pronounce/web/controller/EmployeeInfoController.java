@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wellsfargo.pronounce.core.model.EmployeeInfo;
+import com.wellsfargo.pronounce.core.model.EmployeeInfoDto;
 import com.wellsfargo.pronounce.core.service.IEmployeeInfoService;
 
 @RestController
@@ -21,20 +21,20 @@ public class EmployeeInfoController {
     private IEmployeeInfoService employeeInfoService;
 
     @GetMapping("/{empId}")
-    public EmployeeInfo getEmployeeInfo(@PathVariable("empId") final Long empId) {
+    public EmployeeInfoDto getEmployeeInfo(@PathVariable("empId") final Long empId) {
         return employeeInfoService.getEmployeeInfo(empId);
 
     }
 
     @GetMapping("/search-employees/{name}")
-    public List<EmployeeInfo> searchEmployee(@PathVariable("name") final String name) {
+    public List<EmployeeInfoDto> searchEmployee(@PathVariable("name") final String name) {
         return employeeInfoService.searchEmployee(name);
 
     }
 
     @PutMapping
-    public void saveEmployee(@RequestBody final EmployeeInfo employeeInfo) {
-        employeeInfoService.saveEmployeeInfo(employeeInfo);
+    public EmployeeInfoDto saveEmployee(@RequestBody final EmployeeInfoDto employeeInfo) {
+        return employeeInfoService.saveEmployeeInfo(employeeInfo);
 
     }
 

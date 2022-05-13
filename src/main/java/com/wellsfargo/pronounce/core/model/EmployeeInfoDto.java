@@ -1,6 +1,6 @@
 package com.wellsfargo.pronounce.core.model;
 
-public class EmployeeInfo {
+public class EmployeeInfoDto {
 
     private Long empId;
     private String empName;
@@ -8,6 +8,7 @@ public class EmployeeInfo {
     private String email;
     private String legalName;
     private String namePhoneme;
+    private String role;
 
     public Long getEmpId() {
         return empId;
@@ -56,5 +57,13 @@ public class EmployeeInfo {
     public void setNamePhoneme(String namePhoneme) {
         this.namePhoneme = namePhoneme;
     }
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 }
